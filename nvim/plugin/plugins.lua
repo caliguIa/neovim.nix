@@ -1,10 +1,7 @@
-if vim.g.did_load_plugins_plugin then
-  return
-end
-vim.g.did_load_plugins_plugin = true
+local ok_wk, wk = pcall(require, 'which-key')
+local ok_bigfile, bigfile = pcall(require, 'bigfile')
 
--- many plugins annoyingly require a call to a 'setup' function to be loaded,
--- even with default configs
+if not ok_wk and not ok_bigfile then return end
 
-require('nvim-surround').setup()
-require('which-key').setup()
+wk.setup()
+bigfile.setup()

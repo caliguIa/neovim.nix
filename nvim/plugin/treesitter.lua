@@ -1,97 +1,67 @@
-if vim.g.did_load_treesitter_plugin then
-  return
-end
-vim.g.did_load_treesitter_plugin = true
+local ok_ts_configs, ts_configs = pcall(require, 'nvim-treesitter.configs')
+if not ok_ts_configs then return end
 
-local configs = require('nvim-treesitter.configs')
 vim.g.skip_ts_context_comment_string_module = true
 
 ---@diagnostic disable-next-line: missing-fields
-configs.setup {
-  -- ensure_installed = 'all',
-  -- auto_install = false, -- Do not automatically install missing parsers when entering buffer
-  highlight = {
-    enable = true,
-    disable = function(_, buf)
-      local max_filesize = 100 * 1024 -- 100 KiB
-      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-      if ok and stats and stats.size > max_filesize then
-        return true
-      end
-    end,
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      -- Automatically jump forward to textobject, similar to targets.vim
-      lookahead = true,
-      keymaps = {
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-        ['aC'] = '@call.outer',
-        ['iC'] = '@call.inner',
-        ['a#'] = '@comment.outer',
-        ['i#'] = '@comment.outer',
-        ['ai'] = '@conditional.outer',
-        ['ii'] = '@conditional.outer',
-        ['al'] = '@loop.outer',
-        ['il'] = '@loop.inner',
-        ['aP'] = '@parameter.outer',
-        ['iP'] = '@parameter.inner',
-      },
-      selection_modes = {
-        ['@parameter.outer'] = 'v', -- charwise
-        ['@function.outer'] = 'V', -- linewise
-        ['@class.outer'] = '<c-v>', -- blockwise
-      },
+ts_configs.setup {
+    indent = { enable = false },
+    ensure_installed = {},
+    ignore_install = {},
+    sync_install = false,
+    auto_install = false,
+    rainbow = {
+        enable = true,
     },
-    swap = {
-      enable = true,
-      swap_next = {
-        ['<leader>a'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
-      },
+    highlight = {
+        enable = true,
+        max_file_lines = 5000,
+        disable = function(_, buf)
+            local max_filesize = 100 * 1024 -- 100 KiB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            return stats and stats.size > max_filesize
+        end,
     },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']P'] = '@parameter.outer',
-      },
-      goto_next_end = {
-        [']m'] = '@function.outer',
-        [']P'] = '@parameter.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[P'] = '@parameter.outer',
-      },
-      goto_previous_end = {
-        ['[m'] = '@function.outer',
-        ['[P'] = '@parameter.outer',
-      },
-    },
-    nsp_interop = {
-      enable = true,
-      peek_definition_code = {
-        ['df'] = '@function.outer',
-        ['dF'] = '@class.outer',
-      },
-    },
-  },
 }
 
-require('treesitter-context').setup {
-  max_lines = 3,
+local ok_ts_context, ts_context = pcall(require, 'treesitter-context')
+if not ok_ts_context then return end
+
+ts_context.setup {
+    max_lines = 3,
 }
 
-require('ts_context_commentstring').setup()
+local ok_tabout, tabout = pcall(require, 'tabout')
+if not ok_tabout then return end
 
--- Tree-sitter based folding
--- vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+tabout.setup {
+    tabkey = '<Tab>',
+    backwards_tabkey = '<S-Tab>',
+    completion = false,
+}
+
+local ok_ts_autotag, ts_autotag = pcall(require, 'nvim-ts-autotag')
+if not ok_ts_autotag then return end
+
+ts_autotag.setup {
+    enable_rename = true,
+    enable_close = true,
+    enable_close_on_slash = true,
+    filetypes = {
+        'html',
+        'javascript',
+        'typescript',
+        'javascriptreact',
+        'typescriptreact',
+        'tsx',
+        'jsx',
+        'xml',
+        'php',
+        'markdown',
+    },
+}
+
+local ok_ts_comments, ts_comments = pcall(require, 'ts-comments-nvim')
+if not ok_ts_comments then return end
+
+ts_comments.setup {}

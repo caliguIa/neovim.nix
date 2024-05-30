@@ -1,87 +1,116 @@
-if vim.g.did_load_lualine_plugin then
-  return
+local ok_lualine, lualine = pcall(require, 'lualine')
+
+if not ok_lualine then return end
+
+local icons = require 'user.icons'
+local diagnostics_icons = require('user.icons').diagnostics
+
+local diagnostics = {
+    'diagnostics',
+    sections = { 'error', 'warn' },
+    colored = true, -- Displays diagnostics status in color if set to true.
+    always_visible = true, -- Show diagnostics even if there are none.
+    symbols = {
+        error = diagnostics_icons.ERROR,
+        warn = diagnostics_icons.WARN,
+        hint = diagnostics_icons.HINT,
+        info = diagnostics_icons.INFO,
+    },
+}
+
+local diff = {
+    'diff',
+    source = function()
+        local gitsigns = vim.b.gitsigns_status_dict
+        if gitsigns then
+            return {
+                added = gitsigns.added,
+                modified = gitsigns.changed,
+                removed = gitsigns.removed,
+            }
+        end
+    end,
+    symbols = {
+        added = icons.git.LineAdded .. ' ',
+        modified = icons.git.LineModified .. ' ',
+        removed = icons.git.LineRemoved .. ' ',
+    },
+    colored = true,
+    always_visible = true,
+}
+
+local function getLspName()
+    local buf_clients = vim.lsp.get_active_clients()
+    local buf_ft = vim.bo.filetype
+    if next(buf_clients) == nil then return '  No servers' end
+    local buf_client_names = {}
+
+    for _, client in pairs(buf_clients) do
+        if client.name ~= 'null-ls' then table.insert(buf_client_names, client.name) end
+    end
+
+    local lint_s, lint = pcall(require, 'lint')
+    if lint_s then
+        for ft_k, ft_v in pairs(lint.linters_by_ft) do
+            if type(ft_v) == 'table' then
+                for _, linter in ipairs(ft_v) do
+                    if buf_ft == ft_k then table.insert(buf_client_names, linter) end
+                end
+            elseif type(ft_v) == 'string' then
+                if buf_ft == ft_k then table.insert(buf_client_names, ft_v) end
+            end
+        end
+    end
+
+    local ok, conform = pcall(require, 'conform')
+    local formatters = table.concat(conform.list_formatters_for_buffer(), ' ')
+    if ok then
+        for formatter in formatters:gmatch '%w+' do
+            if formatter then table.insert(buf_client_names, formatter) end
+        end
+    end
+
+    local hash = {}
+    local unique_client_names = {}
+
+    for _, v in ipairs(buf_client_names) do
+        if not hash[v] then
+            if v ~= 'copilot' then
+                unique_client_names[#unique_client_names + 1] = v
+                hash[v] = true
+            end
+        end
+    end
+    local language_servers = table.concat(unique_client_names, ', ')
+
+    return language_servers
 end
-vim.g.did_load_lualine_plugin = true
 
-local navic = require('nvim-navic')
-navic.setup {}
+local lsp = {
+    function() return getLspName() end,
+}
 
----Indicators for special modes,
----@return string status
-local function extra_mode_status()
-  -- recording macros
-  local reg_recording = vim.fn.reg_recording()
-  if reg_recording ~= '' then
-    return ' @' .. reg_recording
-  end
-  -- executing macros
-  local reg_executing = vim.fn.reg_executing()
-  if reg_executing ~= '' then
-    return ' @' .. reg_executing
-  end
-  -- ix mode (<C-x> in insert mode to trigger different builtin completion sources)
-  local mode = vim.api.nvim_get_mode().mode
-  if mode == 'ix' then
-    return '^X: (^]^D^E^F^I^K^L^N^O^Ps^U^V^Y)'
-  end
-  return ''
-end
-
-require('lualine').setup {
-  globalstatus = true,
-  sections = {
-    lualine_c = {
-      -- nvim-navic
-      { navic.get_location, cond = navic.is_available },
+lualine.setup {
+    extensions = { 'trouble' },
+    sections = {
+        lualine_a = { 'branch' },
+        lualine_b = { 'filename' },
+        lualine_c = { 'overseer' },
+        lualine_x = {
+            lsp,
+            -- 'copilot',
+            'progress',
+            diff,
+            diagnostics,
+        },
+        lualine_y = {},
+        lualine_z = {},
     },
-    lualine_z = {
-      -- (see above)
-      { extra_mode_status },
+    options = {
+        icons_enabled = false,
+        theme = 'tokyonight',
+        disabled_filetypes = { 'oil', 'DashboardLoaded', 'dashboard' },
+        component_separators = '',
+        section_separators = '',
     },
-  },
-  options = {
-    theme = 'auto',
-  },
-  -- Example top tabline configuration (this may clash with other plugins)
-  -- tabline = {
-  --   lualine_a = {
-  --     {
-  --       'tabs',
-  --       mode = 1,
-  --     },
-  --   },
-  --   lualine_b = {
-  --     {
-  --       'buffers',
-  --       show_filename_only = true,
-  --       show_bufnr = true,
-  --       mode = 4,
-  --       filetype_names = {
-  --         TelescopePrompt = 'Telescope',
-  --         dashboard = 'Dashboard',
-  --         fzf = 'FZF',
-  --       },
-  --       buffers_color = {
-  --         -- Same values as the general color option can be used here.
-  --         active = 'lualine_b_normal', -- Color for active buffer.
-  --         inactive = 'lualine_b_inactive', -- Color for inactive buffer.
-  --       },
-  --     },
-  --   },
-  --   lualine_c = {},
-  --   lualine_x = {},
-  --   lualine_y = {},
-  --   lualine_z = {},
-  -- },
-  winbar = {
-    lualine_z = {
-      {
-        'filename',
-        path = 1,
-        file_status = true,
-        newfile_status = true,
-      },
-    },
-  },
-  extensions = { 'fugitive', 'fzf', 'toggleterm', 'quickfix' },
 }

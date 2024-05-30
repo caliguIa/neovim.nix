@@ -1,20 +1,16 @@
 local cmd = vim.cmd
-local fn = vim.fn
 local opt = vim.o
 local g = vim.g
 
 -- <leader> key. Defaults to `\`. Some people prefer space.
 -- g.mapleader = ' '
 -- g.maplocalleader = ' '
+g.mapleader = ' '
+g.maplocalleader = ' '
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 
 opt.compatible = false
-
--- Enable true colour support
-if fn.has('termguicolors') then
-  opt.termguicolors = true
-end
-
--- See :h <option> to see what the options do
 
 -- Search down into subfolders
 opt.path = vim.o.path .. '**'
@@ -27,83 +23,59 @@ opt.showmatch = true -- Highlight matching parentheses, etc
 opt.incsearch = true
 opt.hlsearch = true
 
-opt.spell = true
+opt.spell = false
 opt.spelllang = 'en'
 
+opt.autoindent = true
 opt.expandtab = true
-opt.tabstop = 2
-opt.softtabstop = 2
-opt.shiftwidth = 2
+opt.tabstop = 4
+opt.shiftwidth = 4
 opt.foldenable = true
 opt.history = 2000
 opt.nrformats = 'bin,hex' -- 'octal'
 opt.undofile = true
+opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
 opt.splitright = true
 opt.splitbelow = true
 opt.cmdheight = 0
 
-opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+opt.inccommand = 'split'
+opt.mouse = 'a'
+opt.clipboard = 'unnamedplus'
+opt.breakindent = true
+opt.autoread = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.scrolloff = 10
+opt.updatetime = 50
+opt.timeout = true
+opt.timeoutlen = 300
+opt.completeopt = 'menuone,noselect'
+opt.termguicolors = true
+opt.swapfile = false
+opt.wrap = false
+opt.showmode = false
 
--- Configure Neovim diagnostic messages
-
-local function prefix_diagnostic(prefix, diagnostic)
-  return string.format(prefix .. ' %s', diagnostic.message)
-end
-
-local sign = function(opts)
-  fn.sign_define(opts.name, {
-    texthl = opts.name,
-    text = opts.text,
-    numhl = '',
-  })
-end
--- Requires Nerd fonts
-sign { name = 'DiagnosticSignError', text = '󰅚' }
-sign { name = 'DiagnosticSignWarn', text = '⚠' }
-sign { name = 'DiagnosticSignInfo', text = 'ⓘ' }
-sign { name = 'DiagnosticSignHint', text = '󰌶' }
+vim.opt.formatoptions:remove 'o'
 
 vim.diagnostic.config {
-  virtual_text = {
-    prefix = '',
-    format = function(diagnostic)
-      local severity = diagnostic.severity
-      if severity == vim.diagnostic.severity.ERROR then
-        return prefix_diagnostic('󰅚', diagnostic)
-      end
-      if severity == vim.diagnostic.severity.WARN then
-        return prefix_diagnostic('⚠', diagnostic)
-      end
-      if severity == vim.diagnostic.severity.INFO then
-        return prefix_diagnostic('ⓘ', diagnostic)
-      end
-      if severity == vim.diagnostic.severity.HINT then
-        return prefix_diagnostic('󰌶', diagnostic)
-      end
-      return prefix_diagnostic('■', diagnostic)
-    end,
-  },
-  signs = true,
-  update_in_insert = false,
-  underline = true,
-  severity_sort = true,
-  float = {
-    focusable = false,
-    style = 'minimal',
-    border = 'rounded',
-    source = 'if_many',
-    header = '',
-    prefix = '',
-  },
+    virtual_text = false,
+    signs = false,
+    update_in_insert = false,
+    underline = true,
+    severity_sort = true,
+    float = {
+        focusable = false,
+        style = 'minimal',
+        border = 'single',
+        source = 'if_many',
+        header = '',
+        prefix = '',
+    },
 }
 
 g.editorconfig = true
 
-vim.opt.colorcolumn = '100'
-
 -- Native plugins
 cmd.filetype('plugin', 'indent', 'on')
-cmd.packadd('cfilter') -- Allows filtering the quickfix list with :cfdo
-
--- let sqlite.lua (which some plugins depend on) know where to find sqlite
-vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
+cmd.packadd 'cfilter' -- Allows filtering the quickfix list with :cfdo
