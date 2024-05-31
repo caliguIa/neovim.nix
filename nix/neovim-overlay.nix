@@ -97,6 +97,7 @@ let
     (mkNvimPlugin inputs.grug-far "grug-far") # https://github.com/MagicDuck/grug-far.nvim
     nvim-surround # https://github.com/kylechui/nvim-surround/
     nvim-autopairs # https://github.com/windwp/nvim-autopairs/
+    nvim-spectre # https://github.com/nvim-pack/nvim-spectre/
 
     # utilities
     which-key-nvim # https://github.com/folke/which-key.nvim/
