@@ -3,6 +3,7 @@ run:
 
 build:
     git add .
+    nix profile remove nvim
     nix profile install .#nvim
 
 update:

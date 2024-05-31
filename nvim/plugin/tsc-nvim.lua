@@ -1,4 +1,4 @@
-local ok_tsc, tsc = pcall(require, 'tsc-nvim')
+local ok_tsc, tsc = pcall(require, 'tsc')
 
 if not ok_tsc then return end
 

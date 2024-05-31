@@ -61,7 +61,7 @@ ts_autotag.setup {
     },
 }
 
-local ok_ts_comments, ts_comments = pcall(require, 'ts-comments-nvim')
+local ok_ts_comments, ts_comments = pcall(require, 'ts-comments')
 if not ok_ts_comments then return end
 
 ts_comments.setup {}

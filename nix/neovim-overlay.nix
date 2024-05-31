@@ -38,7 +38,7 @@ let
     nvim-treesitter-context # nvim-treesitter-context | https://github.com/nvim-treesitter/nvim-treesitter-context
     tabout-nvim # https://github.com/abecodes/tabout.nvim/
     nvim-ts-autotag # https://github.com/windwp/nvim-ts-autotag/
-    (mkNvimPlugin inputs.ts-comments-nvim "ts-comments-nvim") # https://github.com/folke/ts-comments.nvim
+    (mkNvimPlugin inputs.ts-comments-nvim "ts-comments") # https://github.com/folke/ts-comments.nvim
 
     # snippets
     luasnip # https://github.com/l3mon4d3/luasnip/
@@ -53,13 +53,12 @@ let
     cmp-nvim-lua # neovim lua API as completion source | https://github.com/hrsh7th/cmp-nvim-lua/
     cmp-cmdline # cmp command line suggestions | https://github.com/hrsh7th/cmp-cmdline
     friendly-snippets # https://github.com/rafamadriz/friendly-snippets/
-    copilot-cmp # https://github.com/zbirenbaum/copilot-cmp/
 
     # git
     diffview-nvim # https://github.com/sindrets/diffview.nvim/
     neogit # https://github.com/TimUntersberger/neogit/
     gitsigns-nvim # https://github.com/lewis6991/gitsigns.nvim/
-    (mkNvimPlugin inputs.blame-nvim "blame-nvim") # https://github.com/FabijanZulj/blame.nvim
+    (mkNvimPlugin inputs.blame-nvim "blame") # https://github.com/FabijanZulj/blame.nvim
 
     # ui
     lualine-nvim # Status line | https://github.com/nvim-lualine/lualine.nvim/
@@ -71,10 +70,9 @@ let
     # lsp
     nvim-lspconfig # https://github.com/neovim/nvim-lspconfig/
     typescript-tools-nvim # https://github.com/pmizio/typescript-tools.nvim/
-    (mkNvimPlugin inputs.corn-nvim "corn-nvim") # https://github.com/RaafatTurki/corn.nvim
-    (mkNvimPlugin inputs.tsc-nvim "tsc-nvim") # https://github.com/dmmulroy/tsc.nvim
+    (mkNvimPlugin inputs.corn-nvim "corn") # https://github.com/RaafatTurki/corn.nvim
+    (mkNvimPlugin inputs.tsc-nvim "tsc") # https://github.com/dmmulroy/tsc.nvim
     (mkNvimPlugin inputs.ts-error-translator "ts-error-translator") # https://github.com/dmmulroy/ts-error-translator.nvim
-    (mkNvimPlugin inputs.workspace-diagnostics "workspace-diagnostics") # https://github.com/artemave/workspace-diagnostics.nvim
 
     # linting and formatting
     conform-nvim # https://github.com/stevearc/conform.nvim/
@@ -86,11 +84,10 @@ let
 
     # coding
     copilot-lua # https://github.com/zbirenbaum/copilot.lua/
-    # CopilotChat-nvim # https://github.com/CopilotC-Nvim/CopilotChat.nvim/
+    CopilotChat-nvim # https://github.com/CopilotC-Nvim/CopilotChat.nvim/
 
     # navigation/editing 
-    flit-nvim # https://github.com/ggandor/flit.nvim/
-    leap-nvim # https://github.com/ggandor/leap.nvim/
+    flash-nvim # https://github.com/folke/flash.nvim/
     fzf-lua # https://github.com/ibhagwan/fzf-lua/
     harpoon2 # https://github.com/ThePrimeagen/harpoon/
     nvim-hlslens # https://github.com/kevinhwang91/nvim-hlslens/
@@ -98,6 +95,8 @@ let
     trouble-nvim # https://github.com/folke/trouble.nvim/
     undotree # https://github.com/mbbill/undotree/
     (mkNvimPlugin inputs.grug-far "grug-far") # https://github.com/MagicDuck/grug-far.nvim
+    nvim-surround # https://github.com/kylechui/nvim-surround/
+    nvim-autopairs # https://github.com/windwp/nvim-autopairs/
 
     # utilities
     which-key-nvim # https://github.com/folke/which-key.nvim/

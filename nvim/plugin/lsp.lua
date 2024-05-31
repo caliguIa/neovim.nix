@@ -46,34 +46,9 @@ if vim.fn.executable 'lua-language-server' then
     }
 end
 
--- if vim.fn.executable 'typescript-language-server' == 1 then
---     lspconfig['tsserver'].setup {
---         settings = {
---             typescript = {
---                 inlayHints = {
---                     includeInlayEnumMemberValueHints = true,
---                     includeInlayFunctionLikeReturnTypeHints = true,
---                     includeInlayFunctionParameterTypeHints = true,
---                     includeInlayParameterNameHints = 'all',
---                     includeInlayParameterNameHintsWhenArgumentMatchesName = true,
---                     includeInlayPropertyDeclarationTypeHints = true,
---                     includeInlayVariableTypeHints = true,
---                 },
---             },
---             javascript = {
---                 inlayHints = {
---                     includeInlayEnumMemberValueHints = true,
---                     includeInlayFunctionLikeReturnTypeHints = true,
---                     includeInlayFunctionParameterTypeHints = true,
---                     includeInlayParameterNameHints = 'all',
---                     includeInlayParameterNameHintsWhenArgumentMatchesName = true,
---                     includeInlayPropertyDeclarationTypeHints = true,
---                     includeInlayVariableTypeHints = true,
---                 },
---             },
---         },
---     }
--- end
+-- if vim.fn.executable 'vscode-css-language-server' == 1 then lspconfig['cssls'].setup {} end
+-- if vim.fn.executable 'vscode-html-language-server' == 1 then lspconfig['html'].setup {} end
+-- if vim.fn.executable 'vscode-json-language-server' == 1 then lspconfig['jsonls'].setup {} end
 
 if vim.fn.executable 'ocamllsp' == 1 then lspconfig['ocamllsp'].setup {} end
 

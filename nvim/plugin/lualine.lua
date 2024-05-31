@@ -98,7 +98,7 @@ lualine.setup {
         lualine_c = { 'overseer' },
         lualine_x = {
             lsp,
-            -- 'copilot',
+            'copilot',
             'progress',
             diff,
             diagnostics,

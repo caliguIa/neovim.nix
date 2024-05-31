@@ -9,29 +9,18 @@ vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
----@param source string|table
-local function complete_with_source(source)
-    if type(source) == 'string' then
-        cmp.complete { config = { sources = { { name = source } } } }
-    elseif type(source) == 'table' then
-        cmp.complete { config = { sources = { source } } }
-    end
-end
-
 cmp.setup {
     completion = {
         completeopt = 'menu,menuone,noinsert',
         -- autocomplete = false,
     },
+    ---@diagnostic disable-next-line: missing-fields
     formatting = {
         format = lspkind.cmp_format {
-            mode = 'symbol_text',
-            with_text = true,
+            mode = 'symbol',
+            with_text = false,
             maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
             ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-            -- symbol_map = {
-            --     Copilot = '',
-            -- },
             menu = {
                 buffer = '[BUF]',
                 nvim_lsp = '[LSP]',
@@ -40,7 +29,6 @@ cmp.setup {
                 nvim_lua = '[API]',
                 path = '[PATH]',
                 luasnip = '[SNIP]',
-                -- Copilot = '[CPLT]',
             },
         },
     },
@@ -58,8 +46,7 @@ cmp.setup {
     },
     sources = cmp.config.sources {
         -- The insertion order influences the priority of the sources
-        -- { name = 'copilot' },
-        { name = 'nvim_lsp', keyword_length = 3 },
+        { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
@@ -72,94 +59,36 @@ cmp.setup {
     },
 }
 
-vim.api.nvim_set_hl(0, 'CmpItemKindCopilot', { fg = '#6CC644' })
+local cmp_srcs = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
+}
 
-cmp.setup.filetype('lua', {
-    sources = cmp.config.sources {
-        -- { name = 'copilot' },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
+local filetypes = {
+    'lua',
+    'typescript',
+    'javascript',
+    'typescriptreact',
+    'javascriptreact',
+    'php',
+    'css',
+    'scss',
+    'ocaml',
+}
 
-cmp.setup.filetype('typescript', {
-    sources = cmp.config.sources {
-        -- { name = 'copilot' },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
-
-cmp.setup.filetype('javascript', {
-    sources = cmp.config.sources {
-        -- { name = 'copilot' },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
-
-cmp.setup.filetype('typescriptreact', {
-    sources = cmp.config.sources {
-        -- { name = 'copilot' },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
-
-cmp.setup.filetype('javascriptreact', {
-    sources = cmp.config.sources {
-        -- { name = 'copilot' },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
-
-cmp.setup.filetype('php', {
-    sources = cmp.config.sources {
-        -- { name = 'copilot' },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
-
-cmp.setup.filetype('css', {
-    sources = cmp.config.sources {
-        -- { name = 'copilot' },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
-
-cmp.setup.filetype('scss', {
-    sources = cmp.config.sources {
-        -- { name = 'copilot' },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
-
-cmp.setup.filetype('ocaml', {
-    sources = cmp.config.sources {
-        -- { name = 'copilot' },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
+for _, filetype in ipairs(filetypes) do
+    cmp.setup.filetype(filetype, {
+        sources = cmp.config.sources(cmp_srcs),
+    })
+end
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-        { name = 'nvim_lsp_document_symbol', keyword_length = 3 },
+        { name = 'nvim_lsp_document_symbol' },
         { name = 'buffer' },
     },
     view = {
@@ -175,24 +104,3 @@ cmp.setup.cmdline(':', {
         { name = 'path' },
     },
 })
-
--- vim.keymap.set({ 'i', 'c', 's' }, '<C-n>', cmp.complete, { noremap = false, desc = '[cmp] complete' })
---
--- vim.keymap.set(
---     { 'i', 'c', 's' },
---     '<C-f>',
---     function() complete_with_source 'path' end,
---     { noremap = false, desc = '[cmp] path' }
--- )
--- vim.keymap.set(
---     { 'i', 'c', 's' },
---     '<C-o>',
---     function() complete_with_source 'nvim_lsp' end,
---     { noremap = false, desc = '[cmp] lsp' }
--- )
--- vim.keymap.set(
---     { 'c' },
---     '<C-c>',
---     function() complete_with_source 'cmdline' end,
---     { noremap = false, desc = '[cmp] cmdline' }
--- )

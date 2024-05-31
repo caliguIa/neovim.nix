@@ -1,19 +1,17 @@
-local ok_copilot, copilot = pcall(require, 'copilot')
-
-if not ok_copilot then return end
-
-copilot.setup {
-    suggestion = { enabled = true },
-    panel = { enabled = false },
-    filetypes = { ['*'] = true },
+require('copilot').setup {
+    suggestion = {
+        auto_trigger = true,
+        keymap = {
+            accept = '<C-a>',
+            accept_word = '<C-s>',
+            accept_line = '<C-d>',
+            next = '<M-]>',
+            prev = '<M-[>',
+            dismiss = '<C-]>',
+        },
+    },
 }
 
-local ok_copilot_cmp, copilot_cmp = pcall(require, 'copilot-cmp')
-
-if not ok_copilot_cmp then return end
-
-copilot_cmp.setup {}
-
--- require('CopilotChat').setup {
---     debug = true,
--- }
+require('CopilotChat').setup {
+    debug = true,
+}

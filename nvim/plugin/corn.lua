@@ -1,10 +1,6 @@
-local ok_corn, corn = pcall(require, 'corn-nvim')
-
-if not ok_corn then return end
-
 local icons = require('user.icons').diagnostics
 
-corn.setup {
+require('corn').setup {
     icons = {
         error = icons.ERROR,
         warn = icons.WARN,
