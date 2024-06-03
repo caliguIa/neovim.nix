@@ -44,20 +44,23 @@ local ok_ts_autotag, ts_autotag = pcall(require, 'nvim-ts-autotag')
 if not ok_ts_autotag then return end
 
 ts_autotag.setup {
-    enable_rename = true,
-    enable_close = true,
-    enable_close_on_slash = true,
-    filetypes = {
-        'html',
-        'javascript',
-        'typescript',
-        'javascriptreact',
-        'typescriptreact',
-        'tsx',
-        'jsx',
-        'xml',
-        'php',
-        'markdown',
+    opts = {
+        enable_rename = true,
+        enable_close = true,
+        enable_close_on_slash = true,
+
+        filetypes = {
+            'html',
+            'javascript',
+            'typescript',
+            'javascriptreact',
+            'typescriptreact',
+            'tsx',
+            'jsx',
+            'xml',
+            'php',
+            'markdown',
+        },
     },
 }
 

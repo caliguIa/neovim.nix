@@ -60,6 +60,7 @@ let
     gitsigns-nvim # https://github.com/lewis6991/gitsigns.nvim/
     (mkNvimPlugin inputs.blame-nvim "blame") # https://github.com/FabijanZulj/blame.nvim
     (mkNvimPlugin inputs.fugit2 "fugit2") # https://github.com/SuperBo/fugit2.nvim
+
     # ui
     lualine-nvim # Status line | https://github.com/nvim-lualine/lualine.nvim/
     dashboard-nvim # Start screen | https://github.com/nvimdev/dashboard-nvim/
@@ -95,8 +96,6 @@ let
     trouble-nvim # https://github.com/folke/trouble.nvim/
     undotree # https://github.com/mbbill/undotree/
     (mkNvimPlugin inputs.grug-far "grug-far") # https://github.com/MagicDuck/grug-far.nvim
-    nvim-surround # https://github.com/kylechui/nvim-surround/
-    nvim-autopairs # https://github.com/windwp/nvim-autopairs/
     nvim-spectre # https://github.com/nvim-pack/nvim-spectre/
 
     # utilities
