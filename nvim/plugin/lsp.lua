@@ -1,23 +1,6 @@
 local lspconfig = require 'lspconfig'
 local fzf_lua = require 'fzf-lua'
 
-require('neodev').setup {
-    override = function(root_dir, library)
-        if root_dir:find('/Users/caligula/neovim.nix', 1, true) == 1 then
-            library.enabled = true
-            library.plugins = true
-        end
-    end,
-    library = {
-        plugins = {
-            'neotest',
-            'nvim-treesitter',
-            'plenary.nvim',
-        },
-        types = true,
-    },
-}
-
 vim.diagnostic.config { update_in_insert = false }
 vim.diagnostic.enable(true)
 

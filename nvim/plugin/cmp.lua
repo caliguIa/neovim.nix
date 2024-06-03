@@ -6,6 +6,8 @@ if not ok_cmp and not ok_snip and not ok_lspkind then return end
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
+require('lazydev').setup {}
+
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
@@ -46,6 +48,8 @@ cmp.setup {
     },
     sources = cmp.config.sources {
         -- The insertion order influences the priority of the sources
+        { name = 'lazydev', group_index = 0 },
+        { name = 'nvim_lua' },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'buffer' },

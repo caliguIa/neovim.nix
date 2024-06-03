@@ -38,6 +38,14 @@
       url = "github:artemave/workspace-diagnostics.nvim";
       flake = false;
     };
+    fugit2 = {
+      url = "github:SuperBo/fugit2.nvim";
+      flake = false;
+    };
+    lazydev = {
+      url = "github:folke/lazydev.nvim";
+      flake = false;
+    };
   };
 
   outputs =

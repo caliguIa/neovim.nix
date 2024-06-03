@@ -59,7 +59,7 @@ let
     neogit # https://github.com/TimUntersberger/neogit/
     gitsigns-nvim # https://github.com/lewis6991/gitsigns.nvim/
     (mkNvimPlugin inputs.blame-nvim "blame") # https://github.com/FabijanZulj/blame.nvim
-
+    (mkNvimPlugin inputs.fugit2 "fugit2") # https://github.com/SuperBo/fugit2.nvim
     # ui
     lualine-nvim # Status line | https://github.com/nvim-lualine/lualine.nvim/
     dashboard-nvim # Start screen | https://github.com/nvimdev/dashboard-nvim/
@@ -107,6 +107,7 @@ let
     overseer-nvim # https://github.com/stevearc/overseer.nvim/
     nvim-bqf # https://github.com/kevinhwang91/nvim-bqf/
     (mkNvimPlugin inputs.url-open "url-open") # https://github.com/sontungexpt/url-open
+    (mkNvimPlugin inputs.lazydev "lazydev") # https://github.com/folke/lazydev.nvim
 
     # colourschemes
     tokyonight-nvim # https://github.com/folke/tokyonight.nvim/
@@ -118,7 +119,7 @@ let
     nvim-nio
     FixCursorHold-nvim
     fidget-nvim
-    neodev-nvim
+    nui-nvim
   ];
 
   extraPackages = [
