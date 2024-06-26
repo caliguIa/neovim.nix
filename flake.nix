@@ -46,6 +46,10 @@
       url = "github:folke/lazydev.nvim";
       flake = false;
     };
+    melange = {
+      url = "github:savq/melange-nvim";
+      flake = false;
+    };
   };
 
   outputs =

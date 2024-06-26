@@ -108,7 +108,7 @@ lualine.setup {
     },
     options = {
         icons_enabled = false,
-        theme = 'tokyonight',
+        theme = 'melange',
         disabled_filetypes = { 'oil', 'DashboardLoaded', 'dashboard' },
         component_separators = '',
         section_separators = '',

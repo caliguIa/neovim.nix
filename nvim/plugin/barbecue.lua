@@ -4,7 +4,7 @@ if not ok_barbecue then return end
 
 barbecue.setup {
     create_autocmd = false, -- prevent barbecue from updating itself automatically
-    theme = 'tokyonight',
+    theme = 'melange',
     show_modified = true,
 }
 

@@ -7,11 +7,36 @@ vim.diagnostic.enable(true)
 local servers = {
     cssls = {},
     html = {},
-    jsonls = {},
+    jsonls = {
+        init_options = {
+            provideFormatter = false,
+        },
+    },
     gleam = {},
     ocamllsp = {},
     nil_ls = {},
     nixd = {},
+    rust_analyzer = {
+        settings = {
+            ['rust-analyzer'] = {
+                checkOnSave = {
+                    command = 'clippy',
+                },
+                cargo = {
+                    loadOutDirsFromCheck = true,
+                },
+                procMacro = {
+                    enable = true,
+                },
+                inlayHints = {
+                    chainingHints = true,
+                    typeHints = true,
+                    parameterHints = true,
+                    otherHints = true,
+                },
+            },
+        },
+    },
     lua_ls = {
         settings = {
             Lua = {

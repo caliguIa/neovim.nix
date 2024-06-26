@@ -135,6 +135,22 @@
         "type": "github"
       }
     },
+    "melange": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1717018356,
+        "narHash": "sha256-S+B1x3mfzZyt9cBVSdRYXNemeLOQ0M8RcEzStihHyXc=",
+        "owner": "savq",
+        "repo": "melange-nvim",
+        "rev": "b76b906cd6ed3c3152a47924a8eb5dcb35b326d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "savq",
+        "repo": "melange-nvim",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1716948383,
@@ -204,6 +220,7 @@
         "gen-luarc": "gen-luarc",
         "grug-far": "grug-far",
         "lazydev": "lazydev",
+        "melange": "melange",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-stable": "nixpkgs-stable",
         "ts-comments-nvim": "ts-comments-nvim",

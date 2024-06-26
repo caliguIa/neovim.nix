@@ -71,6 +71,7 @@ let
     # lsp
     nvim-lspconfig # https://github.com/neovim/nvim-lspconfig/
     typescript-tools-nvim # https://github.com/pmizio/typescript-tools.nvim/
+    # rustaceanvim # https://github.com/mrcjkb/rustaceanvim/
     (mkNvimPlugin inputs.corn-nvim "corn") # https://github.com/RaafatTurki/corn.nvim
     (mkNvimPlugin inputs.tsc-nvim "tsc") # https://github.com/dmmulroy/tsc.nvim
     (mkNvimPlugin inputs.ts-error-translator "ts-error-translator") # https://github.com/dmmulroy/ts-error-translator.nvim
@@ -110,6 +111,7 @@ let
 
     # colourschemes
     tokyonight-nvim # https://github.com/folke/tokyonight.nvim/
+    (mkNvimPlugin inputs.melange "melange") # https://github.com/folke/ts-comments.nvim
 
     # dependencies
     plenary-nvim
@@ -131,11 +133,14 @@ let
     pkgs.eslint_d
     pkgs.nodePackages_latest.intelephense
     pkgs.nodePackages.typescript-language-server
+    # pkgs.rust-analyzer
 
     # formatters
     pkgs.stylua
     pkgs.prettierd
     pkgs.ocamlPackages.ocamlformat
+    # pkgs.rustfmt
+    # pkgs.clippy
 
     # tools
     pkgs.ripgrep
