@@ -81,7 +81,7 @@ let
 
     # testing
     neotest # https://github.com/nvim-neotest/neotest/
-    neotest-jest # https://github.com/nvim-neotest/neotest-jest/
+    neotest-vitest # https://github.com/marilari88/neotest-vitest/
     neotest-phpunit # https://github.com/olimorris/neotest-phpunit/
 
     # coding

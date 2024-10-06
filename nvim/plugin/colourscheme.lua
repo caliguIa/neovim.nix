@@ -6,4 +6,4 @@ tokyonight.setup {
     style = 'night',
 }
 
-vim.cmd [[colorscheme melange]]
+vim.cmd [[colorscheme tokyonight]]

@@ -4,16 +4,26 @@ if not ok_neotest then return end
 
 local test_icons = require('user.icons').test
 
+---@diagnostic disable-next-line: missing-fields
 neotest.setup {
     adapters = {
         require 'neotest-phpunit',
-        require 'neotest-jest' {
-            cwd = '/Users/caligula/oneupsales/platform/resources/client',
-            jestCommand = 'npm test --',
+        require 'neotest-vitest' {
+            -- -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
+            -- filter_dir = function(name, rel_path, root) return name ~= 'node_modules' end,
+            -- ---Custom criteria for a file path to determine if it is a vitest test file.
+            -- ---@async
+            -- ---@param file_path string Path of the potential vitest test file
+            -- ---@return boolean
+            -- is_test_file = function(file_path)
+            --     -- Check if the project is "my-peculiar-project"
+            --     if string.match(file_path, 'oneupsales') then
+            --         -- Check if the file path includes something else
+            --         return string.match(file_path, '.spec.')
+            --     end
+            --     return false
+            -- end,
         },
-    },
-    consumers = {
-        overseer = require 'neotest.consumers.overseer',
     },
     icons = {
         failed = test_icons.failed,

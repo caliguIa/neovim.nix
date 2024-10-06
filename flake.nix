@@ -50,6 +50,10 @@
       url = "github:savq/melange-nvim";
       flake = false;
     };
+    neotest-vitest = {
+      url = "github:marilari88/neotest-vitest";
+      flake = false;
+    };
   };
 
   outputs =
